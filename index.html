@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+            font-size: 18px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header .group {
+            font-size: 24px;
+            opacity: 0.9;
+        }
+        
+        .time-schedule {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            font-size: 20px;
+        }
+        
+        .time-schedule h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-size: 26px;
+        }
+        
+        .time-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .time-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            border-left: 4px solid #3498db;
+        }
+        
+        .schedule {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            font-size: 20px;
+        }
+        
+        .day-header {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            padding: 25px 15px;
+            border-bottom: 3px solid #ecf0f1;
+        }
+        
+        .pair-row {
+            border-bottom: 2px solid #ecf0f1;
+            transition: background-color 0.2s;
+        }
+        
+        .pair-row:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .pair-number {
+            background-color: #ecf0f1;
+            text-align: center;
+            font-weight: bold;
+            width: 80px;
+            font-size: 22px;
+            padding: 20px 10px;
+            border-right: 2px solid #ddd;
+        }
+        
+        .pair-time {
+            background-color: #f8f9fa;
+            text-align: center;
+            font-weight: bold;
+            width: 180px;
+            font-size: 18px;
+            padding: 20px 10px;
+            border-right: 2px solid #ddd;
+            color: #2b3a49;
+        }
+        
+        .pair-content {
+            padding: 20px 25px;
+            vertical-align: top;
+        }
+        
+        .subject {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 22px;
+            line-height: 1.3;
+            color: #2c3e50;
+        }
+        
+        .teacher {
+            color: #666;
+            font-size: 18px;
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+        
+        .room {
+            color: #888;
+            font-size: 16px;
+            font-style: italic;
+        }
+        
+        .no-class {
+            background-color: #f8f9fa;
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 30px 20px;
+            font-size: 20px;
+        }
+        
+        .split-class {
+            background-color: #d4edda;
+            border-left: 6px solid #28a745;
+        }
+        
+        .optional {
+            background-color: #e8f5e8;
+            border-left: 6px solid #1e8f1e;
+        }
+
+        /* АДАПТИВНІСТЬ ДЛЯ ТЕЛЕФОНІВ */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                font-size: 16px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .header .group {
+                font-size: 18px;
+            }
+            
+            .schedule {
+                font-size: 16px;
+            }
+            
+            .day-header {
+                font-size: 20px;
+                padding: 20px 10px;
+            }
+            
+            .pair-number {
+                font-size: 18px;
+                padding: 15px 5px;
+                width: 60px;
+            }
+            
+            .pair-time {
+                font-size: 14px;
+                padding: 15px 5px;
+                width: 140px;
+            }
+            
+            .pair-content {
+                padding: 15px;
+            }
+            
+            .subject {
+                font-size: 18px;
+            }
+            
+            .teacher {
+                font-size: 16px;
+            }
+            
+            .time-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1> РОЗКЛАД ЗАНЯТЬ</h1>
+        <div class="group">Група 46 ІС</div>
+    </div>
+    
+    <div class="time-schedule">
+        <h2> ЧАС ПАР</h2>
+        <div class="time-list">
+            <div class="time-item">1 пара: 8:30 - 9:50</div>
+            <div class="time-item">2 пара: 10:00 - 11:20</div>
+            <div class="time-item">3 пара: 11:50 - 13:10</div>
+            <div class="time-item">4 пара: 13:20 - 14:40</div>
+            <div class="time-item">5 пара: 14:50 - 16:10</div>
+            <div class="time-item">6 пара: 16:20 - 17:40</div>
+        </div>
+    </div>
+
+    <!-- ПОНЕДІЛОК -->
+    <table class="schedule">
+        <tr>
+            <th colspan="3" class="day-header">ПОНЕДІЛОК</th>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">I</td>
+            <td class="pair-time">8:30 - 9:50</td>
+            <td class="pair-content">
+                <div class="subject">Основи робототехніки</div>
+                <div class="teacher">Рябушко А.В.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">II</td>
+            <td class="pair-time">10:00 - 11:20</td>
+            <td class="pair-content">
+                <div class="subject">Економіка і бізнес</div>
+                <div class="teacher">Захаревич Н.О.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">III</td>
+            <td class="pair-time">11:50 - 13:10</td>
+            <td class="pair-content">
+                <div class="subject">Web-технології та Web-програмування</div>
+                <div class="teacher">Задара О.А.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">IV</td>
+            <td class="pair-time">13:20 - 14:40</td>
+            <td class="pair-content optional">
+                <div class="subject">--- ВИБІР ---</div>
+                <div style="margin-top: 10px;">
+                    <div class="subject">Основи екології</div>
+                    <div class="teacher">Сухенко О.В.</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+       <!-- ВІВТОРОК -->
+    <table class="schedule">
+        <tr>
+            <th colspan="3" class="day-header">ВІВТОРОК</th>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">I</td>
+            <td class="pair-time">8:30 - 9:50</td>
+            <td class="pair-content no-class">---</td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">II</td>
+            <td class="pair-time">10:00 - 11:20</td>
+            <td class="pair-content updated">
+                <div class="subject">Охорона праці в галузі</div>
+                <div class="teacher">Зубенко Ю.В.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">III</td>
+            <td class="pair-time">11:50 - 13:10</td>
+            <td class="pair-content">
+                <div class="subject">Web-технології та Web-програмування</div>
+                <div class="teacher">Задара О.А.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">IV</td>
+            <td class="pair-time">13:20 - 14:40</td>
+            <td class="pair-content">
+                <div class="subject">Проектування комп'ютерних мереж СКС</div>
+                <div class="teacher">Величко В.О.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">V</td>
+            <td class="pair-time">14:50 - 16:10</td>
+            <td class="pair-content no-class">---</td>
+        </tr>
+    </table>
+
+    <!-- СЕРЕДА -->
+    <table class="schedule">
+        <tr>
+            <th colspan="3" class="day-header">СЕРЕДА</th>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">I</td>
+            <td class="pair-time">8:30 - 9:50</td>
+            <td class="pair-content split-class">
+                <div class="subject">--- ВИБІР ---</div>
+                <div style="margin-top: 10px;">
+                    <div class="subject">Основи кібербезпеки</div>
+                    <div class="teacher">Нестеренко А.</div>
+                </div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">II</td>
+            <td class="pair-time">10:00 - 11:20</td>
+            <td class="pair-content">
+                <div class="subject">Основи кібербезпеки</div>
+                <div class="teacher">Нестеренко А.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">III</td>
+            <td class="pair-time">11:50 - 13:10</td>
+            <td class="pair-content">
+                <div class="subject">Практика з програмування</div>
+                <div class="teacher">Нестеренко А.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">IV</td>
+            <td class="pair-time">13:20 - 14:40</td>
+            <td class="pair-content no-class">---</td>
+        </tr>
+    </table>
+
+    <!-- ЧЕТВЕР -->
+    <table class="schedule">
+        <tr>
+            <th colspan="3" class="day-header">ЧЕТВЕР</th>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">I</td>
+            <td class="pair-time">8:30 - 9:50</td>
+            <td class="pair-content no-class">---</td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">II</td>
+            <td class="pair-time">10:00 - 11:20</td>
+            <td class="pair-content split-class">
+                <div class="subject">--- ВИБІР ---</div>
+                <div style="margin-top: 10px;">
+                    <div class="subject">Проектування комп'ютерних мереж СКС</div>
+                    <div class="teacher">Величко В.О.</div>
+                    <div style="margin: 8px 0; font-weight: bold; text-align: center;">або</div>
+                    <div class="subject">Основи філософських знань</div>
+                    <div class="teacher">Калита І.А.</div>
+                </div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">III</td>
+            <td class="pair-time">11:50 - 13:10</td>
+            <td class="pair-content split-class">
+                <div class="subject">--- ВИБІР ---</div>
+                <div style="margin-top: 10px;">
+                    <div class="subject">Культурологія</div>
+                    <div class="teacher">Іванова Н.В.</div>
+                    <div style="margin: 8px 0; font-weight: bold; text-align: center;">або</div>
+                    <div class="subject">Програмування</div>
+                    <div class="teacher">Ярмола О.С.</div>
+                </div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">IV</td>
+            <td class="pair-time">13:20 - 14:40</td>
+            <td class="pair-content updated">
+                <div class="subject">Система Автоматизованого управління</div>
+                <div class="teacher">Рябушко А.В.</div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- П'ЯТНИЦЯ -->
+    <table class="schedule">
+        <tr>
+            <th colspan="3" class="day-header">П'ЯТНИЦЯ</th>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">I</td>
+            <td class="pair-time">8:30 - 9:50</td>
+            <td class="pair-content">
+                <div class="subject">Практика з програмування</div>
+                <div class="teacher">Нестеренко А.О.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">II</td>
+            <td class="pair-time">10:00 - 11:20</td>
+            <td class="pair-content">
+                <div class="subject">Іноземна мова (за проф. спрямуванням)</div>
+                <div class="teacher">Мацапура Л.В.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">III</td>
+            <td class="pair-time">11:50 - 13:10</td>
+            <td class="pair-content">
+                <div class="subject">Програмування</div>
+                <div class="teacher">Ярмола О.С.</div>
+            </td>
+        </tr>
+        <tr class="pair-row">
+            <td class="pair-number">IV</td>
+            <td class="pair-time">13:20 - 14:40</td>
+            <td class="pair-content no-class">---</td>
+        </tr>
+    </table>
+
+</body>
+</html>
